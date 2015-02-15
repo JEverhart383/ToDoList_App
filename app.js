@@ -22,14 +22,19 @@ function writeList(listArray, domElement){
 
 		//compare importance value and create HTML element 
 		if (listArray[i].taskImport == true){
-			importSymbol = "!!!!!";
+			importSymbol = "<span class='glyphicon glyphicon-exclamation-sign'></span>";
 		} else {
-			importSymbol = "00000";
+			importSymbol = "<span class='glyphicon glyphicon-minus-sign'></span>";
 		}
 
 		//Remove double quotes and add class and styling to LIs
 
-		var todo_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + "<button class='done_btn'> DONE</button></li>";
+		var todo_string = "<li><div class='panel panel-default'>";
+		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + "</h4></div>";
+		todo_string += "<div class='panel-body'>" + listArray[i].taskDate + " " + importSymbol;
+		todo_string += "</br></br><button class='done_btn btn btn-success'><span class='glyphicon glyphicon-ok'></span> DONE</button>";
+		todo_string +=" </div></li>";
+		
 		domElement.append(todo_string); 
 
 	}//End for loop 
@@ -40,7 +45,7 @@ function writeList(listArray, domElement){
 	var todo_list = domElement.html();
 	
 	//functionto write newTask_array to local storage
-	localStorage.setItem('newTask_array', JSON.stringify(listArray)); 
+	//localStorage.setItem('newTask_array', JSON.stringify(listArray)); 
 
 } //End writeList function
 
@@ -53,17 +58,31 @@ function writeDoneList(listArray, domElement){
 
 	for (i=0; i < listArray.length; i++){
 
-		//compare importance value and create HTML element 
-		if (listArray[i].taskImport == true){
-			importSymbol = "!!!!!";
+		if (typeof listArray[i] === "undefined"){
+			listArray.splice(i, 1);
 		} else {
-			importSymbol = "00000";
-		}
 
-		//Remove double quotes and add class and styling to LIs
+			//compare importance value and create HTML element 
+			if (listArray[i].taskImport == true){
+				importSymbol = "<span class='glyphicon glyphicon-exclamation-sign'></span>";
+			} else {
+				importSymbol = "<span class='glyphicon glyphicon-minus-sign'></span>";
+			}
 
-		var done_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + "<button class='remove'> Remove</button></li>";
-		$(".done_list").append(done_string);
+			//Remove double quotes and add class and styling to LIs
+
+			//var done_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + " " + "<button class='remove btn btn-danger'><span class='glyphicon glyphicon-remove'></span>  Remove</button></li>";
+			
+			var done_string = "<li><div class='panel panel-default'>";
+			done_string += "<div class='panel-heading'><h4 class='panel-title'><s>" + listArray[i].taskName + "</s></h4></div>";
+			done_string += "<div class='panel-body'>" + listArray[i].taskDate + " " + importSymbol;
+			done_string += "</br></br><button class='remove btn btn-danger'><span class='glyphicon glyphicon-remove'></span> Remove</button>";
+			done_string +=" </div></li>";
+
+
+
+			$(".done_list").append(done_string);
+		}//End else to check for undefined 
 
 
 	}//End for loop 
@@ -74,7 +93,7 @@ function writeDoneList(listArray, domElement){
 	var todo_list = domElement.html();
 	
 	//functionto write newTask_array to local storage
-	localStorage.setItem('doneTask_array', JSON.stringify(listArray)); 
+	//localStorage.setItem('doneTask_array', JSON.stringify(listArray)); 
 
 
 } //End writeDoneList function
@@ -88,12 +107,16 @@ if (localStorage.getItem("newTask_array")) {
 
 		writeList(newTask_array, $(".todo_list"));
 
+
+}//End load LocalStorage if statement 
+
+if (localStorage.getItem("doneTask_array")){
+
 		doneTask_array = JSON.parse(localStorage.getItem("doneTask_array"));
 
 		writeDoneList(doneTask_array, $(".done_list"));
 
 }//End load LocalStorage if statement 
-
 
 //Collect all input values and attach to object, then push to newTask_array
 $(".add_task").click(function(){
@@ -120,7 +143,12 @@ $(".add_task").click(function(){
 		return dateA - dateB;
 	}); //End sort function
 
+	console.log(newTask_array);
+
 	writeList(newTask_array, $(".todo_list"));
+
+	//functionto write newTask_array to local storage
+	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
 	
 });//End on click function for add button 	
 
@@ -130,8 +158,10 @@ $(".add_task").click(function(){
 $(".todo_list").on('click','.done_btn', function (){
 
 	//get index of clicked item, add to doneTask_array, remove from newTask_array
-	var list_index = $(this).parent().index();
+	var list_index = $(this).parent().index() - 1;
 	var doneTask = newTask_array[list_index];
+
+	console.log(typeof doneTask);
 
 	doneTask_array.push(doneTask);
 	newTask_array.splice(list_index, 1);
@@ -157,6 +187,12 @@ $(".todo_list").on('click','.done_btn', function (){
 
 	writeDoneList(doneTask_array, $(".done_list"));
 
+	//functionto write newTask_array to local storage
+	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
+	//functionto write newTask_array to local storage
+	localStorage.setItem('doneTask_array', JSON.stringify(doneTask_array)); 
+
+
 });// End on click for DONE button
 
 
@@ -165,7 +201,7 @@ $(".todo_list").on('click','.done_btn', function (){
 $(".done_list").on('click','.remove', function (){
 
 	//get index of clicked item, remove from doneTask_array, rewrite doneTask_array
-	var list_index = $(this).parent().index();
+	var list_index = $(this).parent().index() - 1;
 	doneTask_array.splice(list_index, 1);
 
 	if(doneTask_array.length == 0){
@@ -173,18 +209,17 @@ $(".done_list").on('click','.remove', function (){
 		//clear .done_list ul and write doneTask_array to ul 
 		$(".done_list").children().remove();
 
+		localStorage.setItem('doneTask_array', JSON.stringify(doneTask_array)); 
+
 	} else {
 
 		writeDoneList(doneTask_array, $(".done_list"));
+		//functionto write newTask_array to local storage
+		localStorage.setItem('doneTask_array', JSON.stringify(doneTask_array)); 
+
 
 	}//End Else 
 
 });//End Remove button 
-
-});//End document ready  
-
-
-
-
 
 });//End document ready  
