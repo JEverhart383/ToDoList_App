@@ -9,39 +9,97 @@ function createNewTask(name, date, importance){
 	this.taskName = name;
 	this.taskDate = date;
 	this.taskImport = importance;
-
-
 }
+
+function writeList(listArray, domElement){
+
+	//clear ul for new sorted list
+	domElement.children().remove();
+
+	var importSymbol; 
+
+	for (i=0; i < listArray.length; i++){
+
+		//compare importance value and create HTML element 
+		if (listArray[i].taskImport == true){
+			importSymbol = "!!!!!";
+		} else {
+			importSymbol = "00000";
+		}
+
+		//Remove double quotes and add class and styling to LIs
+
+		var todo_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + "<button class='done_btn'> DONE</button></li>";
+		domElement.append(todo_string); 
+
+	}//End for loop 
+
+	$("input").val("");// clear input elements after addition
+	$("input[type=checkbox]").attr("checked", false);
+
+	var todo_list = domElement.html();
+	
+	//functionto write newTask_array to local storage
+	localStorage.setItem('newTask_array', JSON.stringify(listArray)); 
+
+} //End writeList function
+
+function writeDoneList(listArray, domElement){
+
+	//clear ul for new sorted list
+	domElement.children().remove();
+
+	var importSymbol; 
+
+	for (i=0; i < listArray.length; i++){
+
+		//compare importance value and create HTML element 
+		if (listArray[i].taskImport == true){
+			importSymbol = "!!!!!";
+		} else {
+			importSymbol = "00000";
+		}
+
+		//Remove double quotes and add class and styling to LIs
+
+		var done_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + "<button class='remove'> Remove</button></li>";
+		$(".done_list").append(done_string);
+
+
+	}//End for loop 
+
+	$("input").val("");// clear input elements after addition
+	$("input[type=checkbox]").attr("checked", false);
+	
+	var todo_list = domElement.html();
+	
+	//functionto write newTask_array to local storage
+	localStorage.setItem('doneTask_array', JSON.stringify(listArray)); 
+
+
+} //End writeDoneList function
+
 
 //If statement to load newTask_array from localStorage and write to todoList
 
 if (localStorage.getItem("newTask_array")) {
 
-	newTask_array = JSON.parse(localStorage.getItem("newTask_array"));
-	console.log(newTask_array);
+		newTask_array = JSON.parse(localStorage.getItem("newTask_array"));
 
-	//clear ul for new sorted list
-	$(".todo_list").children().remove();
+		writeList(newTask_array, $(".todo_list"));
 
-	for (i=0; i < newTask_array.length; i++){
+		doneTask_array = JSON.parse(localStorage.getItem("doneTask_array"));
 
-		//Remove double quotes and add class and styling to LIs
+		writeDoneList(doneTask_array, $(".done_list"));
 
-		var todo_string = "<li>" + newTask_array[i].taskName + " " + newTask_array[i].taskDate + newTask_array[i].taskImport  + "<button class='done_btn'> DONE</button></li>";
-		$(".todo_list").append(todo_string); 
+}//End load LocalStorage if statement 
 
-
-	}//End for loop 
-
-
-
-}
 
 //Collect all input values and attach to object, then push to newTask_array
 $(".add_task").click(function(){
 	var new_date = $(".datepicker").val();
 	var new_task = $(".task_name").val();
-	var new_import = $("input[type=radio]:checked").val();	
+	var new_import = $("input[type=checkbox]").prop("checked");	
 
 	var newTask = new createNewTask(new_task, new_date, new_import);
 
@@ -54,47 +112,19 @@ $(".add_task").click(function(){
 
 		if (+dateA === +dateB){
 
-			var importA = parseInt(a.taskImport);
-			var importB = parseInt(b.taskImport);
-			return importA - importB; 
+			var importA = a.taskImport
+			var importB = b.taskImport
+			return importB - importA; 
 		}
 
 		return dateA - dateB;
 	}); //End sort function
 
-	//clear ul for new sorted list
-	$(".todo_list").children().remove();
-
-	var importSymbol; 
-
-	for (i=0; i < newTask_array.length; i++){
-
-		//compare importance value and create HTML element 
-		if (newTask_array[i].taskImport == 1){
-			importSymbol = "!!!!!";
-		} else {
-			importSymbol = "00000";
-		}
-
-		//Remove double quotes and add class and styling to LIs
-
-		var todo_string = "<li>" + newTask_array[i].taskName + " " + newTask_array[i].taskDate + " " + importSymbol + "<button class='done_btn'> DONE</button></li>";
-		$(".todo_list").append(todo_string); 
-
-
-	}//End for loop 
-
-	$("input").val("");// clear input elements after addition
-
-	
-	var todo_list = $('.todo_list').html();
-	console.log(todo_list);
-	
-
-	//functionto write newTask_array to local storage
-	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
+	writeList(newTask_array, $(".todo_list"));
 	
 });//End on click function for add button 	
+
+
 
 //Start MARK TASK DONE list item function
 $(".todo_list").on('click','.done_btn', function (){
@@ -115,70 +145,26 @@ $(".todo_list").on('click','.done_btn', function (){
 
 		if (+dateA === +dateB){
 
-			var importA = parseInt(a.taskImport);
-			var importB = parseInt(b.taskImport);
-			return importA - importB; 
+			var importA = a.taskImport;
+			var importB = b.taskImport;
+			return importB - importA;  
 		}
 
 		return dateA - dateB;
 	}); //End sort function
 
-	//functionto write newTask_array to local storage
-		localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
+	writeList(newTask_array, $(".todo_list"));
 
-	//clear ul for new sorted list
-	$(".todo_list").children().remove();
+	writeDoneList(doneTask_array, $(".done_list"));
 
-	var importSymbol; 
-
-	for (i=0; i < newTask_array.length; i++){
-
-		//compare importance value and create HTML element 
-		if (newTask_array[i].taskImport === 1){
-			importSymbol = "!!!!!";
-		} else {
-			importSymbol = "00000";
-		}
-
-		//Remove double quotes and add class and styling to LIs
-
-		var todo_string = "<li>" + newTask_array[i].taskName + " " + newTask_array[i].taskDate + " important" + "<button class='done_btn'> DONE</button></li>";
-		$(".todo_list").append(todo_string);
-	
-	}//end for loop 
-
-
-	
-
-
-	//clear .done_list ul and write doneTask_array to ul 
-	$(".done_list").children().remove();
-
-	var importSymbol;
-
-	for (i=0; i < doneTask_array.length; i++){
-
-		//compare importance value and create HTML element 
-		if (newTask_array[i].taskImport == 1){
-			importSymbol = "!!!!!";
-		} else {
-			importSymbol = "00000";
-		}
-
-		//Remove double quotes and add class and styling to LIs
-
-		var done_string = "<li>" + doneTask_array[i].taskName + " " + doneTask_array[i].taskDate + " important " + "<button class='remove'> Remove</button></li>";
-		$(".done_list").append(done_string);
-
-
-	}//End for loop  
 });// End on click for DONE button
+
 
 //BEGIN REMOVE BUTTON
 
 $(".done_list").on('click','.remove', function (){
 
-//get index of clicked item, remove from doneTask_array, rewrite doneTask_array
+	//get index of clicked item, remove from doneTask_array, rewrite doneTask_array
 	var list_index = $(this).parent().index();
 	doneTask_array.splice(list_index, 1);
 
@@ -189,21 +175,13 @@ $(".done_list").on('click','.remove', function (){
 
 	} else {
 
-		//clear .done_list ul and write doneTask_array to ul 
-		$(".done_list").children().remove();
+		writeDoneList(doneTask_array, $(".done_list"));
 
-	for (i=0; i <= doneTask_array.length; i++){
+	}//End Else 
 
-		//Remove double quotes and add class and styling to LIs
+});//End Remove button 
 
-		var done_string = "<li>" + doneTask_array[i].taskName + " " + doneTask_array[i].taskDate + " important" + "<button class='remove'> Remove</button></li>";
-		$(".done_list").append(done_string);
-
-
-	}//End for loop  
-}//End Else 
-
-});
+});//End document ready  
 
 
 
