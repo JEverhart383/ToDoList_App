@@ -2,69 +2,43 @@
 
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.js"></script>
-<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.date.js"></script>
-<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.css">
-<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.date.css">
-
-
-
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.js"></script>
+	<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.date.js"></script>
+	<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.css">
+	<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.date.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="custom.css">
 </head>
-<body>
-	<h1>My Whiteboard</h1>
-	<h2>Add Task</h2>
-	<h4>Name</h4>
-<input type="text" class="task_name">
+<div class="container-fluid">
+	<body>
+		<h1>My Whiteboard</h1>
+		<h4>Task Name</h4>
+	<input type="text" class="task_name">
 
-	<h4>Date</h4>	
-<input type="text" class="datepicker" id="datepicker">
-<script type="text/javascript">
-	$(".datepicker").pickadate();
-</script>
+		<h4>Due Date</h4>	
+	<input type="text" class="datepicker" id="datepicker">
+	<script type="text/javascript">
+		$(".datepicker").pickadate();
+	</script>
+	<br/>
+	<br/>
+	<input type="checkbox" value="1" id="important"name="importance">
+	<label for="important">Importance&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span></label>
+	<br/>
+	<br/>
+	<button class="add_task btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</button>
+	<hr>
+	<h4>To Do List</h3>
+	<ul class="todo_list">
+	</ul>
+	<hr>
+	<h4>Completed Tasks</h3>
+	<ul class="done_list">
+	</ul>
+	<script type="text/javascript" src="app.js"></script>
 
-<h4>Importance</h4>
-<br/>
-<input type="radio" value="1" id="important"name="importance">
-<label for="important">Important</label>
-<input type="radio" value="2" id="unimportant" name="importance">
-<label for="unimportant">Unimportant</label>
-<br/>
-
-<button class="add_task">Add Task</button>
-
-<hr>
-<h3>To Do List</h3>
-<ul class="todo_list">
-</ul>
-
-<hr>
-<h3>Completed Tasks</h3>
-<ul class="done_list">
-
-
-
-
-
-
-
-</ul>
-<script type="text/javascript" src="app.js"></script>
-
-</body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	</body>
+</div>
 </html>
