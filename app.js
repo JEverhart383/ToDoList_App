@@ -1,9 +1,12 @@
-$("document").ready(function(){
+
+
+});//End Remove button $("document").ready(function(){
 
 
 //Define globals
 var newTask_array = [];
 var doneTask_array = [];
+var deletedTask_array = [];
 
 function createNewTask(name, date, importance){
 	this.taskName = name;
@@ -41,16 +44,16 @@ function writeList(listArray, domElement){
 
 		//compare importance value and create HTML element 
 		if (listArray[i].taskImport == true){
-			importSymbol = "<span class='glyphicon glyphicon-exclamation-sign'></span>";
+			importSymbol = "<span class='glyphicon glyphicon-star'></span>";
 		} else {
-			importSymbol = "<span class='glyphicon glyphicon-minus-sign'></span>";
+			importSymbol = "<span></span>";
 		}
 
 		//Remove double quotes and add class and styling to LIs
 
 		var todo_string = "<li><div class='panel " + panelClass + "'>";
-		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + "</h4></div>";
-		todo_string += "<div class='panel-body'>" + listArray[i].taskDate + " " + importSymbol;
+		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + " " + importSymbol + "</h4></div>";
+		todo_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
 		todo_string += "</br></br><button class='done_btn btn btn-success'><span class='glyphicon glyphicon-ok'></span> DONE</button>";
 		todo_string +=" </div></li>";
 		
@@ -82,19 +85,19 @@ function writeDoneList(listArray, domElement){
 		} else {
 
 			//compare importance value and create HTML element 
-			if (listArray[i].taskImport == true){
-				importSymbol = "<span class='glyphicon glyphicon-exclamation-sign'></span>";
-			} else {
-				importSymbol = "<span class='glyphicon glyphicon-minus-sign'></span>";
-			}
+		if (listArray[i].taskImport == true){
+			importSymbol = "<span class='glyphicon glyphicon-star'></span>";
+		} else {
+			importSymbol = "<span></span>";
+		}
 
 			//Remove double quotes and add class and styling to LIs
 
 			//var done_string = "<li>" + listArray[i].taskName + " " + listArray[i].taskDate + " " + importSymbol + " " + "<button class='remove btn btn-danger'><span class='glyphicon glyphicon-remove'></span>  Remove</button></li>";
 			
 			var done_string = "<li><div class='panel panel-default'>";
-			done_string += "<div class='panel-heading'><h4 class='panel-title'><s>" + listArray[i].taskName + "</s></h4></div>";
-			done_string += "<div class='panel-body'>" + listArray[i].taskDate + " " + importSymbol;
+			done_string += "<div class='panel-heading'><h4 class='panel-title'><s>" + listArray[i].taskName + " " + importSymbol + "</s></h4></div>";
+			done_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
 			done_string += "</br></br><button class='remove btn btn-danger'><span class='glyphicon glyphicon-remove'></span> Remove</button>";
 			done_string +=" </div></li>";
 
@@ -116,6 +119,38 @@ function writeDoneList(listArray, domElement){
 
 
 } //End writeDoneList function
+
+function writeDeletedList(listArray, domElement){
+
+	//clear ul for new sorted list
+	domElement.children().remove();
+
+	var importSymbol; 
+	var panelClass = "panel-default";
+
+	for (i=0; i < listArray.length; i++){
+
+		//compare importance value and create HTML element 
+		if (listArray[i].taskImport == true){
+			importSymbol = "<span class='glyphicon glyphicon-star'></span>";
+		} else {
+			importSymbol = "<span></span>";
+		}
+
+		//Remove double quotes and add class and styling to LIs
+
+		var todo_string = "<li><div class='panel " + panelClass + "'>";
+		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + " " + importSymbol + "</h4></div>";
+		todo_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
+		todo_string += "</br></br><button class='done_btn btn btn-default'><span class='glyphicon glyphicon-refresh'></span> DONE</button>" + "      ";
+		todo_string += "<button class='done_btn btn btn-danger'><span class='glyphicon glyphicon-trash'></span> DONE</button>";
+		todo_string +=" </div></li>";
+		
+		domElement.append(todo_string); 
+
+	}//End for loop 
+
+} //End writeDeletedList function
 
 
 //If statement to load newTask_array from localStorage and write to todoList
@@ -161,8 +196,6 @@ $(".add_task").click(function(){
 
 		return dateA - dateB;
 	}); //End sort function
-
-	console.log(newTask_array);
 
 	writeList(newTask_array, $(".todo_list"));
 
@@ -219,7 +252,11 @@ $(".done_list").on('click','.remove', function (){
 
 	//get index of clicked item, remove from doneTask_array, rewrite doneTask_array
 	var list_index = $(this).parents("li").index();
+	var deletedTask = doneTask_array[list_index];
+	deletedTask_array.push(deletedTask);
 	doneTask_array.splice(list_index, 1);
+
+	localStorage.setItem('deletedTask_array', JSON.stringify(deletedTask_array));
 
 	if(doneTask_array.length == 0){
 		
@@ -238,5 +275,12 @@ $(".done_list").on('click','.remove', function (){
 	}//End Else 
 
 });//End Remove button 
+
+if ($(".deleted_items")){
+
+	deletedTask_array = JSON.parse(localStorage.getItem('deletedTask_array'));
+
+	writeDeletedList(deletedTask_array,$(".deleted_items"));
+}
 
 });//End document ready  
