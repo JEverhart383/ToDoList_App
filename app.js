@@ -17,8 +17,27 @@ function writeList(listArray, domElement){
 	domElement.children().remove();
 
 	var importSymbol; 
+	var panelClass;
 
 	for (i=0; i < listArray.length; i++){
+
+		
+		var todayDate = new Date();
+		var checkDate = new Date(listArray[i].taskDate);
+
+		var oneDays = 1000 * 60 * 60 * 24;
+		var threeDays = 1000 * 60 * 60 * 24 * 3;
+
+		if ((checkDate.getTime()-todayDate.getTime()) < oneDays){
+			panelClass = "panel-danger";
+
+		} else if ((checkDate.getTime()-todayDate.getTime()) < threeDays){
+			panelClass = "panel-warning";
+		} else {
+			panelClass = "panel-default";
+
+		}
+
 
 		//compare importance value and create HTML element 
 		if (listArray[i].taskImport == true){
@@ -29,7 +48,7 @@ function writeList(listArray, domElement){
 
 		//Remove double quotes and add class and styling to LIs
 
-		var todo_string = "<li><div class='panel panel-default'>";
+		var todo_string = "<li><div class='panel " + panelClass + "'>";
 		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + "</h4></div>";
 		todo_string += "<div class='panel-body'>" + listArray[i].taskDate + " " + importSymbol;
 		todo_string += "</br></br><button class='done_btn btn btn-success'><span class='glyphicon glyphicon-ok'></span> DONE</button>";
@@ -158,10 +177,8 @@ $(".add_task").click(function(){
 $(".todo_list").on('click','.done_btn', function (){
 
 	//get index of clicked item, add to doneTask_array, remove from newTask_array
-	var list_index = $(this).parent().index() - 1;
+	var list_index = $(this).parents("li").index();
 	var doneTask = newTask_array[list_index];
-
-	console.log(typeof doneTask);
 
 	doneTask_array.push(doneTask);
 	newTask_array.splice(list_index, 1);
@@ -201,7 +218,7 @@ $(".todo_list").on('click','.done_btn', function (){
 $(".done_list").on('click','.remove', function (){
 
 	//get index of clicked item, remove from doneTask_array, rewrite doneTask_array
-	var list_index = $(this).parent().index() - 1;
+	var list_index = $(this).parents("li").index();
 	doneTask_array.splice(list_index, 1);
 
 	if(doneTask_array.length == 0){
