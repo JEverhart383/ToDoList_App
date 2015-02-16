@@ -1,9 +1,12 @@
+body {
+	padding-top: 70px;
+}
 ul{
 	margin: 0;
 	padding: 0;
 }
 
-.todo_list, .done_list {
+.todo_list, .done_list, .deleted_items {
 
 	list-style-type: none;
 	padding-left: -40 px;
