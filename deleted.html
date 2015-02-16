@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="custom.css">
+</head>
+<body>
+	<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;ToDo Lists</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          	<li><a href="test.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
+            <li class="active"><a href="deleted.html"><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Tasks</a></li>
+            <li><a href="settings.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div class="container">
+<h4>Deleted Items</h4>
+<ul class="deleted_items">
+</ul>	 
+		
+	<script type="text/javascript" src="app.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</div>
+
+
+</body>
+</html>
