@@ -349,12 +349,15 @@ if ($(".deleted_items")){
 
 	writeDeletedList(deletedTask_array,$(".deleted_items"));
 
-}
 	//Start on click for restore button
-	/*$(".deleted_items").on('click','.restore_btn', function(){
-		var list_index = $(this).parent('li').index();
+	$(".deleted_items").on('click','.restore_btn', function(){
+		var list_index = $(this).parents('li').index();
 
-		restoredTask = deletedTask_array[list_index];
+		console.log(list_index);
+
+		var restoredTask = deletedTask_array[list_index];
+
+		console.log(restoredTask);
 
 		newTask_array.push(restoredTask);
 
@@ -396,7 +399,8 @@ if ($(".deleted_items")){
 
 
 	});//End trash on click callback
-}//End deleted items if */
+}//End deleted items if 
 
 
 });//End document ready  
+
