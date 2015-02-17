@@ -42,7 +42,9 @@
 		<h4>Due Date</h4>	
 	<input type="text" class="datepicker" id="datepicker">
 	<script type="text/javascript">
-		$(".datepicker").pickadate();
+		$(".datepicker").pickadate({
+			format: 'mmmm d, yyyy'
+		});
 	</script>
 	<br/>
 	<br/>
