@@ -18,7 +18,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;ToDo Lists</a>
+          <a class="navbar-brand" href="test.html"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;Prioritask</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -31,9 +31,67 @@
     </nav>
 
 <div class="container">
-<h4>Settings</h4>
-<ul class="settings">
-</ul>	 
+<h4><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</h4>
+<div class=".settings_panel">
+  <form>
+  <fieldset><h5>Contextual Alert Settings</h5></fieldset>
+  <p>Prioritask uses contextual alerts to notify you of upcoming due dates. Use the number inputs below to specify when you want to activate these contextual alerts.</p>
+    <div class="alert alert-warning">
+    Warning Styles: <input type="number" name="warning_days" class="warning_days" min="1" max="31" steps="1" value="3">
+    <br>
+    (Current Setting: <span class="warning_task_settings"></span>)
+    </div>
+
+    <div class="alert alert-danger">
+    Danger Styles: <input type="number" min="1" max="31" name="danger_days" class="danger_days">
+    <br>
+    (Current Setting: <span class="danger_task_settings"></span>)
+    </div>
+
+  <fieldset><h5>Completed and Deleted Task Settings</h5></fieldset>
+  <p>Prioritask keeps track of all your completed and deleted tasks. You can use the settings below to keep your task lists neat and organized. Activating these settings also helps with memory management.</p>
+
+  <h6><span class="glyphicon glyphicon-ok"></span>&nbsp;Completed Task Storage</h6>
+  <p>Use the buttons below to select the amount of completed tasks you want to store.</p>
+  <div class="btn-group completed_task_settings" data-toggle="buttons">
+    <label class="btn btn-primary active">
+      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option3" autocomplete="off" value="50"> 50 tasks
+    </label>
+  </div>
+
+  <h6><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Task Storage</h6>
+  <p>Use the buttons below to select the amount of deleted tasks you want to store.</p>
+
+  <div class="btn-group deleted_task_settings" data-toggle="buttons">
+    <label class="btn btn-primary active">
+      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="option3" autocomplete="off" value="50"> 50 tasks
+    </label>
+  </div>
+  <br>
+  <br>
+
+  <div class="btn btn-default update_settings">restore</div>
+  <button class="btn btn-default restore_settings"><span class="glyphicon glyphicon-repeat"></span>&nbsp;Restore Defaults</button>
+  <button class="btn btn-primary update_settings"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;Update Settings</button>
+
+  </form>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
 		
 	<script type="text/javascript" src="app.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
