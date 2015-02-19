@@ -7,5 +7,6 @@ things to do:
 
 1. <s>Add interactivity to deleted buttons</s>
 2. <s>Add settings page and JS variables</s> 
+3. Write settings functions
 3. smooth out desktop/mobile presentation 
 4. refactor and optimize code base 
