@@ -5,8 +5,8 @@ $("document").ready(function(){
 var newTask_array = [];
 var doneTask_array = [];
 var deletedTask_array = [];
-
-console.log(deletedTask_array);
+var defaultSettings; 
+var prioritaskSettings; 
 
 
 function createNewTask(name, date, importance, completeDate){
@@ -14,6 +14,13 @@ function createNewTask(name, date, importance, completeDate){
 	this.taskDate = date;
 	this.taskImport = importance;
 	this.completeDate = completeDate;
+}
+
+function createNewSettings(warningDays, dangerDays, completedStore, deletedStore){
+	this.warningDays = warningDays;
+	this.dangerDays = dangerDays;
+	this.completedStore = completedStore;
+	this.deletedStore = deletedStore; 
 }
 
 function writeList(listArray, domElement){
@@ -67,11 +74,7 @@ function writeList(listArray, domElement){
 	$("input[type=checkbox]").attr("checked", false);
 
 	var todo_list = domElement.html();
-	
-	//functionto write newTask_array to local storage
-	//localStorage.setItem('newTask_array', JSON.stringify(listArray)); 
 
-	console.log(deletedTask_array);
 
 } //End writeList function
 
@@ -115,11 +118,6 @@ function writeDoneList(listArray, domElement){
 	
 	var todo_list = domElement.html();
 
-	console.log(deletedTask_array);
-	
-	//functionto write newTask_array to local storage
-	//localStorage.setItem('doneTask_array', JSON.stringify(listArray)); 
-
 
 } //End writeDoneList function
 
@@ -151,9 +149,23 @@ function writeDeletedList(listArray, domElement){
 
 	}//End for loop 
 
-	console.log(deletedTask_array);
-
 } //End writeDeletedList function
+
+
+
+//generate default settings
+
+
+defaultSettings = new createNewSettings(3, 1, "manually", "manually");
+
+prioritaskSettings = defaultSettings;
+
+
+//if statement to load prioirtaskSettings from localStroage
+
+if (localStorage.getItem("prioritaskSettings")){
+	prioritaskSettings = JSON.parse(localStorage.getItem("prioritaskSettings"));
+	}
 
 
 //If statement to load newTask_array from localStorage and write to todoList
@@ -163,9 +175,6 @@ function writeDeletedList(listArray, domElement){
 			newTask_array = JSON.parse(localStorage.getItem("newTask_array"));
 
 			writeList(newTask_array, $(".todo_list"));
-
-			console.log(deletedTask_array);
-
 
 		}//End load LocalStorage if statement 
 
@@ -213,7 +222,6 @@ $(".add_task").click(function(){
 	//functionto write newTask_array to local storage
 	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
 
-	console.log(deletedTask_array);
 	
 });//End on click function for add button 	
 
@@ -302,8 +310,6 @@ $(".todo_list").on('click','.done_btn', function (){
 	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
 	//functionto write newTask_array to local storage
 	localStorage.setItem('doneTask_array', JSON.stringify(doneTask_array)); 
-
-	console.log(deletedTask_array)
 
 
 });// End on click for DONE button
@@ -399,8 +405,44 @@ if ($(".deleted_items")){
 
 
 	});//End trash on click callback
-}//End deleted items if 
+}//End deleted items if */
+
+
+//Start SDK for Settings Panel 
+if ($(".settings_panel")){
+
+	if (prioritaskSettings.warningDays == 1){
+		$(".warning_task_settings").text(prioritaskSettings.warningDays + " Day");
+	} else {
+		$(".warning_task_settings").text(prioritaskSettings.warningDays + " Days");
+	}
+
+	if (prioritaskSettings.dangerDays == 1){
+		 $(".danger_task_settings").text(prioritaskSettings.dangerDays + " Day");
+	} else {
+		 $(".danger_task_settings").text(prioritaskSettings.dangerDays + " Days");
+	}
+
+
+$(".restore_settings").click(function(event){
+	prioritaskSettings = defaultSettings;
+	//write settings function call here with default settings object as parameter 
+
+});
+
+$(".update_settings").click(function (event){
+	event.preventDefault();
+
+	var newDangerDay = $(".danger_days").val()
+
+	var newWarningDay = $(".warning_days").val(); 
+	console.log(newWarningDay);
+	console.log(newDangerDay);
+
+
+}); 
+
+}//End Setting Panel if 
 
 
 });//End document ready  
-
