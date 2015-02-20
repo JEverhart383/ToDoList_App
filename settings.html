@@ -53,36 +53,35 @@
 
   <h6><span class="glyphicon glyphicon-ok"></span>&nbsp;Completed Task Storage</h6>
   <p>Use the buttons below to select the amount of completed tasks you want to store.</p>
-  <div class="btn-group completed_task_settings" data-toggle="buttons">
-    <label class="btn btn-primary active">
-      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
+  <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary completed_manual active" name="options1">
+      <input type="radio" name="options1" id="option1" value="manually"> Manually remove tasks
     </label>
-    <label class="btn btn-primary">
-      <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
+    <label class="btn btn-primary completed_ten">
+      <input type="radio" name="options1" id="option2" value="10"> 10 tasks
     </label>
-    <label class="btn btn-primary">
-      <input type="radio" name="options" id="option3" autocomplete="off" value="50"> 50 tasks
+    <label class="btn btn-primary completed_fifty">
+      <input type="radio" name="options1" id="option3" value="50"> 50 tasks
     </label>
   </div>
 
   <h6><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Task Storage</h6>
   <p>Use the buttons below to select the amount of deleted tasks you want to store.</p>
 
-  <div class="btn-group deleted_task_settings" data-toggle="buttons">
-    <label class="btn btn-primary active">
+  <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary deleted_manual active">
       <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
     </label>
-    <label class="btn btn-primary">
+    <label class="btn btn-primary deleted_ten">
       <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
     </label>
-    <label class="btn btn-primary">
+    <label class="btn btn-primary deleted_fifty">
       <input type="radio" name="options" id="option3" autocomplete="off" value="50"> 50 tasks
     </label>
   </div>
   <br>
   <br>
 
-  <div class="btn btn-default update_settings">restore</div>
   <button class="btn btn-default restore_settings"><span class="glyphicon glyphicon-repeat"></span>&nbsp;Restore Defaults</button>
   <button class="btn btn-primary update_settings"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;Update Settings</button>
 
