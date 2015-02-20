@@ -23,7 +23,20 @@ function createNewSettings(warningDays, dangerDays, completedStore, deletedStore
 	this.deletedStore = deletedStore; 
 }
 
+//Possible hide/show functions for add task panel 
+
+/*function hideAddList(domElement){
+	domElement.hide();	
+
+}
+
+function showAddList(domElement){
+	domElement.show();
+
+}*/ 
+
 function writeList(listArray, domElement){
+
 
 	//clear ul for new sorted list
 	domElement.children().remove();
@@ -409,7 +422,7 @@ if ($(".deleted_items")){
 
 
 //Start SDK for Settings Panel 
-if ($(".settings_panel")){
+if ($(".settings_panel")){ 
 
 	if (prioritaskSettings.warningDays == 1){
 		$(".warning_task_settings").text(prioritaskSettings.warningDays + " Day");
@@ -423,24 +436,83 @@ if ($(".settings_panel")){
 		 $(".danger_task_settings").text(prioritaskSettings.dangerDays + " Days");
 	}
 
+	var completeTaskSettings = prioritaskSettings.completedStore; 
+	var deleteTaskSettings = prioritaskSettings.deletedStore;
 
-$(".restore_settings").click(function(event){
-	prioritaskSettings = defaultSettings;
-	//write settings function call here with default settings object as parameter 
+	$("label.btn.btn-primary.completed_manual").click(function(){
 
-});
+		completeTaskSettings = "manually";
 
-$(".update_settings").click(function (event){
-	event.preventDefault();
+	});
 
-	var newDangerDay = $(".danger_days").val()
+	$("label.btn.btn-primary.completed_ten").click(function(){
 
-	var newWarningDay = $(".warning_days").val(); 
-	console.log(newWarningDay);
-	console.log(newDangerDay);
+		completeTaskSettings = 10;
+	});
+
+	$("label.btn.btn-primary.completed_fifty").click(function(){
+
+		completeTaskSettings = 50;
+	});
+
+	$("label.btn.btn-primary.deleted_manual").click(function(){
+
+		deleteTaskSettings = "manually";
+
+	});
+
+	$("label.btn.btn-primary.deleted_ten").click(function(){
+
+		deleteTaskSettings = 10;
+		console.log("works");
+	});
+
+	$("label.btn.btn-primary.deleted_fifty").click(function(){
+
+		deletedTaskSettings = 50;
+		console.log("works");
+
+	});
+
+	console.log(prioritaskSettings);
+	
 
 
-}); 
+	$(".restore_settings").click(function(event){
+			event.preventDefault();
+			prioritaskSettings = defaultSettings;
+			
+			//write settings function call here with default settings object as parameter 
+
+	});
+
+	$(".update_settings").click(function(event){
+			event.preventDefault();
+
+			var newDangerDay = parseInt($(".danger_days").val());
+
+			var newWarningDay = parseInt($(".warning_days").val());
+
+			if (newDangerDay === "" || isNaN(newDangerDay)){
+				newDangerDay = prioritaskSettings.dangerDays;
+			} else {
+				prioritaskSettings.dangerDays = newDangerDay;
+			}
+
+			if (newWarningDay === "" || isNaN(newWarningDay)){
+				newWarningDay = prioritaskSettings.warningDays;
+			} else{
+				prioritaskSettings.warningDays = newWarningDay;
+			}
+
+			prioritaskSettings.completedStore = completeTaskSettings;
+			prioritaskSettings.deletedStore = deleteTaskSettings;
+
+			console.log(prioritaskSettings);
+
+			//call write settings function 
+
+	}); 
 
 }//End Setting Panel if 
 
