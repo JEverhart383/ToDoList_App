@@ -483,7 +483,7 @@ if ($(".deleted_items")){
 	//Start Trash on click 
 
 	$('.deleted_items').on('click', '.trash_btn', function(){
-		var list_index = $(this).parent('li').index();
+		var list_index = $(this).parents('li').index();
 
 		deletedTask_array.splice(list_index, 1);
 
