@@ -2,12 +2,21 @@
 
 <html>
 <head>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.js"></script>
+	<script type="text/javascript" src="/Users/luemployee/Desktop/DoneList/lib/picker.date.js"></script>
+	<script type="text/javascript" src="spin.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.css">
+	<link rel="stylesheet" type="text/css" href="/Users/luemployee/Desktop/DoneList/lib/themes/classic.date.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="custom.css">
 </head>
 <body>
+
+	<div class="spinner" id="spinner">
+	</div>
 	<!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -22,81 +31,87 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          	<li><a href="test.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
+          	<li class="active"><a href="test.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
             <li><a href="deleted.html"><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Tasks</a></li>
-            <li class="active"><a href="settings.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
+            <li><a href="settings.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
 <div class="container">
-<h4><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</h4>
-<div class=".settings_panel">
-  <form>
-  <fieldset><h5>Contextual Alert Settings</h5></fieldset>
-  <p>Prioritask uses contextual alerts to notify you of upcoming due dates. Use the number inputs below to specify when you want to activate these contextual alerts.</p>
-    <div class="alert alert-warning">
-    Warning Styles: <input type="number" name="warning_days" class="warning_days" min="1" max="31" steps="1" value="3">
-    <br>
-    (Current Setting: <span class="warning_task_settings"></span>)
-    </div>
+	<div class="spinner">
+	</div>
+	<div class="add_task_panel">
+	 
+		<h4>Task Name</h4>
+		<input type="text" class="task_name">
 
-    <div class="alert alert-danger">
-    Danger Styles: <input type="number" min="1" max="31" name="danger_days" class="danger_days">
-    <br>
-    (Current Setting: <span class="danger_task_settings"></span>)
-    </div>
-
-  <fieldset><h5>Completed and Deleted Task Settings</h5></fieldset>
-  <p>Prioritask keeps track of all your completed and deleted tasks. You can use the settings below to keep your task lists neat and organized. Activating these settings also helps with memory management.</p>
-
-  <h6><span class="glyphicon glyphicon-ok"></span>&nbsp;Completed Task Storage</h6>
-  <p>Use the buttons below to select the amount of completed tasks you want to store.</p>
-  <div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary completed_manual active" name="options1">
-      <input type="radio" name="options1" id="option1" value="manually"> Manually remove tasks
-    </label>
-    <label class="btn btn-primary completed_ten">
-      <input type="radio" name="options1" id="option2" value="10"> 10 tasks
-    </label>
-    <label class="btn btn-primary completed_fifty">
-      <input type="radio" name="options1" id="option3" value="50"> 50 tasks
-    </label>
-  </div>
-
-  <h6><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Task Storage</h6>
-  <p>Use the buttons below to select the amount of deleted tasks you want to store.</p>
-
-  <div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary deleted_manual active">
-      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
-    </label>
-    <label class="btn btn-primary deleted_ten">
-      <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
-    </label>
-    <label class="btn btn-primary deleted_fifty">
-      <input type="radio" name="options" id="option3" autocomplete="off" value="50"> 50 tasks
-    </label>
-  </div>
-  <br>
-  <br>
-
-  <button class="btn btn-default restore_settings"><span class="glyphicon glyphicon-repeat"></span>&nbsp;Restore Defaults</button>
-  <button class="btn btn-primary update_settings"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;Update Settings</button>
-
-  </form>
-  <br>
-  <br>
-  <br>
-  <br>
-</div>
+			<h4>Due Date</h4>	
+		<input type="text" class="datepicker" id="datepicker">
+		<script type="text/javascript">
+			$(".datepicker").pickadate({
+				format: 'mmmm d, yyyy'
+			});
+		</script>
+		<br/>
+		<br/>
+		<input type="checkbox" value="1" id="important"name="importance">
+		<label for="important">Importance&nbsp;<span class="glyphicon glyphicon-star"></span></label>
+		<br/>
+		<br/>
+		</div>
+		<button class="add_task btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</button>
+		<div class="spinner"></div>
+		<hr>
+	<h4>Task List</h4>
+	<ul class="todo_list">
+	</ul>
+	<hr>
+	<h4>Completed Tasks</h4>
+	<ul class="done_list">
+	</ul>
+	
+	<script type="text/javascript">
 		
+		var spinner;
+
+		$(document).ready(function(){
+
+			var opts = {
+						  lines: 13, // The number of lines to draw
+						  length: 20, // The length of each line
+						  width: 10, // The line thickness
+						  radius: 30, // The radius of the inner circle
+						  corners: 1, // Corner roundness (0..1)
+						  rotate: 0, // The rotation offset
+						  direction: 1, // 1: clockwise, -1: counterclockwise
+						  color: '#000', // #rgb or #rrggbb or array of colors
+						  speed: 1, // Rounds per second
+						  trail: 60, // Afterglow percentage
+						  shadow: false, // Whether to render a shadow
+						  hwaccel: false, // Whether to use hardware acceleration
+						  className: 'spinner', // The CSS class to assign to the spinner
+						  zIndex: 2e9, // The z-index (defaults to 2000000000)
+						  top: '50%', // Top position relative to parent
+						  left: '50%' // Left position relative to parent
+						};
+				
+
+				var target = document.getElementById('spinner');
+				spinner = new Spinner(opts).spin(target);
+		});
+
+		$(window).load(function(){
+			spinner.stop();
+		})
+
+	</script>
 	<script type="text/javascript" src="app.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
 </div>
-
-
 </body>
 </html>
