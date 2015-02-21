@@ -35,6 +35,81 @@ function showAddList(domElement){
 
 }*/ 
 
+function writeSettings(settingsObject, domElement){
+
+	$(".btn").removeClass("active");
+
+	$(".warning_days").val(" ");
+	if (settingsObject.warningDays == 1){
+		$(".warning_task_settings").text(settingsObject.warningDays + " Day");
+	} else {
+		$(".warning_task_settings").text(settingsObject.warningDays + " Days");
+	}
+
+	$(".danger_days").val(" ");
+
+	if (settingsObject.dangerDays == 1){
+		 $(".danger_task_settings").text(settingsObject.dangerDays + " Day");
+	} else {
+		 $(".danger_task_settings").text(settingsObject.dangerDays + " Days");
+	}
+
+	if(isNaN(settingsObject.completedStore)){
+		$("label.btn.btn-primary.completed_manual").addClass("active");
+
+	} else if(settingsObject.completedStore == 10 ){
+		$("label.btn.btn-primary.completed_ten").addClass("active");
+	} else {
+		$("label.btn.btn-primary.completed_fifty").addClass("active");
+
+	}
+
+	if(isNaN(settingsObject.deletedStore)){
+		$("label.btn.btn-primary.deleted_manual").addClass("active");
+
+	} else if(settingsObject.deletedStore == 10 ){
+		$("label.btn.btn-primary.deleted_ten").addClass("active");
+	} else {
+		$("label.btn.btn-primary.deleted_fifty").addClass("active");
+
+	}
+
+	$("label.btn.btn-primary.completed_manual").click(function(){
+
+		settingsObject.completedStore = "manually";
+
+	});
+
+	$("label.btn.btn-primary.completed_ten").click(function(){
+
+		settingsObject.completedStore = 10;
+	});
+
+	$("label.btn.btn-primary.completed_fifty").click(function(){
+
+		settingsObject.completedStore = 50;
+	});
+
+	$("label.btn.btn-primary.deleted_manual").click(function(){
+
+		settingsObject.deletedStore = "manually";
+
+	});
+
+	$("label.btn.btn-primary.deleted_ten").click(function(){
+
+		settingsObject.deletedStore = 10;
+	});
+
+	$("label.btn.btn-primary.deleted_fifty").click(function(){
+
+		settingsObject.deletedStore = 50;
+
+	});
+
+
+}//End write settings 
+
 function writeList(listArray, domElement){
 
 
@@ -423,66 +498,19 @@ if ($(".deleted_items")){
 
 //Start SDK for Settings Panel 
 if ($(".settings_panel")){ 
-
-	if (prioritaskSettings.warningDays == 1){
-		$(".warning_task_settings").text(prioritaskSettings.warningDays + " Day");
-	} else {
-		$(".warning_task_settings").text(prioritaskSettings.warningDays + " Days");
-	}
-
-	if (prioritaskSettings.dangerDays == 1){
-		 $(".danger_task_settings").text(prioritaskSettings.dangerDays + " Day");
-	} else {
-		 $(".danger_task_settings").text(prioritaskSettings.dangerDays + " Days");
-	}
-
-	var completeTaskSettings = prioritaskSettings.completedStore; 
-	var deleteTaskSettings = prioritaskSettings.deletedStore;
-
-	$("label.btn.btn-primary.completed_manual").click(function(){
-
-		completeTaskSettings = "manually";
-
-	});
-
-	$("label.btn.btn-primary.completed_ten").click(function(){
-
-		completeTaskSettings = 10;
-	});
-
-	$("label.btn.btn-primary.completed_fifty").click(function(){
-
-		completeTaskSettings = 50;
-	});
-
-	$("label.btn.btn-primary.deleted_manual").click(function(){
-
-		deleteTaskSettings = "manually";
-
-	});
-
-	$("label.btn.btn-primary.deleted_ten").click(function(){
-
-		deleteTaskSettings = 10;
-		console.log("works");
-	});
-
-	$("label.btn.btn-primary.deleted_fifty").click(function(){
-
-		deletedTaskSettings = 50;
-		console.log("works");
-
-	});
-
-	console.log(prioritaskSettings);
 	
+	//var completeTaskSettings = prioritaskSettings.completedStore; 
+	//var deleteTaskSettings = prioritaskSettings.deletedStore;
+	
+
+	writeSettings(prioritaskSettings, $(".settings_panel"));
 
 
 	$(".restore_settings").click(function(event){
 			event.preventDefault();
 			prioritaskSettings = defaultSettings;
-			
-			//write settings function call here with default settings object as parameter 
+			console.log(prioritaskSettings);
+			writeSettings(prioritaskSettings, $(".settings_panel"));
 
 	});
 
@@ -505,12 +533,12 @@ if ($(".settings_panel")){
 				prioritaskSettings.warningDays = newWarningDay;
 			}
 
-			prioritaskSettings.completedStore = completeTaskSettings;
-			prioritaskSettings.deletedStore = deleteTaskSettings;
+			//prioritaskSettings.completedStore = completeTaskSettings;
+			//prioritaskSettings.deletedStore = deleteTaskSettings;
 
-			console.log(prioritaskSettings);
 
-			//call write settings function 
+			localStorage.setItem("prioritaskSettings", JSON.stringify(prioritaskSettings));
+			writeSettings(prioritaskSettings, $(".settings_panel"));
 
 	}); 
 
