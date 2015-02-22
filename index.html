@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="./lib/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="./lib/js/picker.js"></script>
+	<script type="text/javascript" src="./lib/js/picker.date.js"></script>
+	<script type="text/javascript" src="./lib/js/spin.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/css/classic.css">
+	<link rel="stylesheet" type="text/css" href="./lib/css/classic.date.css">
+	<link rel="stylesheet" href="./lib/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./lib/css/custom.css">
+</head>
+<body>
+
+	<div class="spinner" id="spinner">
+	</div>
+	<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;Prioritask</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          	<li class="active"><a href="index.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
+            <li><a href="deleted.html"><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Tasks</a></li>
+            <li><a href="settings.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div class="container">
+	<div class="add_task_panel">
+	 
+		<h4>Task Name</h4>
+		<input type="text" class="task_name">
+
+			<h4>Due Date</h4>	
+		<input type="text" class="datepicker" id="datepicker">
+		<script type="text/javascript">
+			$(".datepicker").pickadate({
+				format: 'mmmm d, yyyy'
+			});
+		</script>
+		<br/>
+		<br/>
+		<input type="checkbox" value="1" id="important"name="importance">
+		<label for="important">Importance&nbsp;<span class="glyphicon glyphicon-star"></span></label>
+		<br/>
+		<br/>
+		</div>
+		<button class="add_task btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</button>
+		<div class="spinner"></div>
+		<hr>
+	<h4>Task List</h4>
+	<ul class="todo_list">
+	</ul>
+	<hr>
+	<h4>Completed Tasks</h4>
+	<ul class="done_list">
+	</ul>
+	
+	<script type="text/javascript">
+		
+		var spinner;
+
+		$(document).ready(function(){
+
+			var opts = {
+						  lines: 13, // The number of lines to draw
+						  length: 20, // The length of each line
+						  width: 10, // The line thickness
+						  radius: 30, // The radius of the inner circle
+						  corners: 1, // Corner roundness (0..1)
+						  rotate: 0, // The rotation offset
+						  direction: 1, // 1: clockwise, -1: counterclockwise
+						  color: '#000', // #rgb or #rrggbb or array of colors
+						  speed: 1, // Rounds per second
+						  trail: 60, // Afterglow percentage
+						  shadow: false, // Whether to render a shadow
+						  hwaccel: false, // Whether to use hardware acceleration
+						  className: 'spinner', // The CSS class to assign to the spinner
+						  zIndex: 2e9, // The z-index (defaults to 2000000000)
+						  top: '50%', // Top position relative to parent
+						  left: '50%' // Left position relative to parent
+						};
+				
+
+				var target = document.getElementById('spinner');
+				spinner = new Spinner(opts).spin(target);
+		});
+
+		$(window).load(function(){
+			spinner.stop();
+		})
+
+	</script>
+	<script type="text/javascript" src="./lib/js/app.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="./lib/js/bootstrap.min.js"></script>
+
+	
+</div>
+</body>
+</html>
