@@ -125,13 +125,12 @@ function writeList(listArray, domElement){
 		var todayDate = new Date();
 		var checkDate = new Date(listArray[i].taskDate);
 
-		var oneDays = 1000 * 60 * 60 * 24;
-		var threeDays = 1000 * 60 * 60 * 24 * 3;
+		var oneDay = 1000 * 60 * 60 * 24;
 
-		if ((checkDate.getTime()-todayDate.getTime()) < oneDays){
+		if ((checkDate.getTime()-todayDate.getTime()) < (oneDay * prioritaskSettings.dangerDays)) {
 			panelClass = "panel-danger";
 
-		} else if ((checkDate.getTime()-todayDate.getTime()) < threeDays){
+		} else if ((checkDate.getTime()-todayDate.getTime()) < (oneDay * prioritaskSettings.warningDays)){
 			panelClass = "panel-warning";
 		} else {
 			panelClass = "panel-default";
@@ -170,6 +169,15 @@ function writeDoneList(listArray, domElement){
 
 	//clear ul for new sorted list
 	domElement.children().remove();
+
+	//settings while loop
+
+	if (!isNaN(prioritaskSettings.completedStore)){
+		while (listArray.length > prioritaskSettings.completedStore){
+			listArray.pop();
+		}
+
+	}
 
 	var importSymbol; 
 
@@ -213,6 +221,15 @@ function writeDeletedList(listArray, domElement){
 
 	//clear ul for new sorted list
 	domElement.children().remove();
+
+
+	//Settings if and while
+	if (!isNaN(prioritaskSettings.completedStore)){
+		while (listArray.length > prioritaskSettings.completedStore){
+			listArray.pop();
+		}
+
+	}
 
 	var importSymbol; 
 
@@ -498,10 +515,7 @@ if ($(".deleted_items")){
 
 //Start SDK for Settings Panel 
 if ($(".settings_panel")){ 
-	
-	//var completeTaskSettings = prioritaskSettings.completedStore; 
-	//var deleteTaskSettings = prioritaskSettings.deletedStore;
-	
+		
 
 	writeSettings(prioritaskSettings, $(".settings_panel"));
 
@@ -509,7 +523,7 @@ if ($(".settings_panel")){
 	$(".restore_settings").click(function(event){
 			event.preventDefault();
 			prioritaskSettings = defaultSettings;
-			console.log(prioritaskSettings);
+			localStorage.setItem("prioritaskSettings", JSON.stringify(prioritaskSettings));
 			writeSettings(prioritaskSettings, $(".settings_panel"));
 
 	});
@@ -532,10 +546,6 @@ if ($(".settings_panel")){
 			} else{
 				prioritaskSettings.warningDays = newWarningDay;
 			}
-
-			//prioritaskSettings.completedStore = completeTaskSettings;
-			//prioritaskSettings.deletedStore = deleteTaskSettings;
-
 
 			localStorage.setItem("prioritaskSettings", JSON.stringify(prioritaskSettings));
 			writeSettings(prioritaskSettings, $(".settings_panel"));
