@@ -2,12 +2,16 @@
 
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="custom.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="./lib/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="./lib/js/spin.min.js"></script>
+  <link rel="stylesheet" href="./lib/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./lib/css/custom.css">
 </head>
 <body>
+  <div class="spinner" id="spinner">
+  </div>
 	<!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -18,11 +22,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="test.html"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;Prioritask</a>
+          <a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;Prioritask</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          	<li><a href="test.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
+          	<li><a href="index.html"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add Task</a></li>
             <li><a href="deleted.html"><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Tasks</a></li>
             <li class="active"><a href="settings.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
           </ul>
@@ -52,11 +56,10 @@
   <p>Prioritask keeps track of all your completed and deleted tasks. You can use the settings below to keep your task lists neat and organized. Activating these settings also helps with memory management.</p>
 
   <h6><span class="glyphicon glyphicon-ok"></span>&nbsp;Completed Task Storage</h6>
-  <p>Use the buttons below to select the amount of completed tasks you want to store.</p>
+  <p>How would you like to manage your deleted tasks? Manual deletion, 10 task limit, or 50 task limit.</p>
   <div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary completed_manual active" name="options1">
-      <input type="radio" name="options1" id="option1" value="manually"> Manually remove tasks
-    </label>
+    <label class="btn btn-primary completed_manual" name="options1">
+      <input type="radio" name="options1" id="option1" value="manually"> Manual</label>
     <label class="btn btn-primary completed_ten">
       <input type="radio" name="options1" id="option2" value="10"> 10 tasks
     </label>
@@ -66,11 +69,11 @@
   </div>
 
   <h6><span class="glyphicon glyphicon-trash"></span>&nbsp;Deleted Task Storage</h6>
-  <p>Use the buttons below to select the amount of deleted tasks you want to store.</p>
+  <p>How would you like to manage your deleted tasks? Manual deletion, 10 task limit, or 50 task limit.</p>
 
   <div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-primary deleted_manual active">
-      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manually remove tasks
+    <label class="btn btn-primary deleted_manual">
+      <input type="radio" name="options" id="option1" autocomplete="off" value="manually"> Manual
     </label>
     <label class="btn btn-primary deleted_ten">
       <input type="radio" name="options" id="option2" autocomplete="off" value="10"> 10 tasks
@@ -92,9 +95,45 @@
   <br>
 </div>
 		
-	<script type="text/javascript" src="app.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    
+    var spinner;
+
+    $(document).ready(function(){
+
+      var opts = {
+              lines: 13, // The number of lines to draw
+              length: 20, // The length of each line
+              width: 10, // The line thickness
+              radius: 30, // The radius of the inner circle
+              corners: 1, // Corner roundness (0..1)
+              rotate: 0, // The rotation offset
+              direction: 1, // 1: clockwise, -1: counterclockwise
+              color: '#000', // #rgb or #rrggbb or array of colors
+              speed: 1, // Rounds per second
+              trail: 60, // Afterglow percentage
+              shadow: false, // Whether to render a shadow
+              hwaccel: false, // Whether to use hardware acceleration
+              className: 'spinner', // The CSS class to assign to the spinner
+              zIndex: 2e9, // The z-index (defaults to 2000000000)
+              top: '50%', // Top position relative to parent
+              left: '50%' // Left position relative to parent
+            };
+        
+
+        var target = document.getElementById('spinner');
+        spinner = new Spinner(opts).spin(target);
+    });
+
+    $(window).load(function(){
+      spinner.stop();
+    })
+
+  </script>
+  <script type="text/javascript" src="./lib/js/app.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="./lib/js/bootstrap.min.js"></script>
+
 </div>
 
 
