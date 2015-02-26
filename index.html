@@ -7,9 +7,11 @@
 	<script src="./lib/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="./lib/js/picker.js"></script>
 	<script type="text/javascript" src="./lib/js/picker.date.js"></script>
+	<script type="text/javascript" src="./lib/js/picker.time.js"></script>
 	<script type="text/javascript" src="./lib/js/spin.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./lib/css/classic.css">
 	<link rel="stylesheet" type="text/css" href="./lib/css/classic.date.css">
+	<link rel="stylesheet" type="text/css" href="./lib/css/classic.time.css">
 	<link rel="stylesheet" href="./lib/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./lib/css/custom.css">
 </head>
@@ -45,7 +47,7 @@
 		<h4>Task Name</h4>
 		<input type="text" class="task_name">
 
-			<h4>Due Date</h4>	
+			<h5>Due Date</h4>	
 		<input type="text" class="datepicker" id="datepicker">
 		<script type="text/javascript">
 			$(".datepicker").pickadate({
@@ -53,7 +55,18 @@
 			});
 		</script>
 		<br/>
-		<br/>
+		<h5>Time</h4>
+		<input type = "text" class="timepicker" id="timepicker">
+		<script type="text/javascript">
+		$(".timepicker").pickatime({
+
+			
+			
+		});
+
+		</script>
+		<br>
+		<br>
 		<input type="checkbox" value="1" id="important"name="importance">
 		<label for="important">Importance&nbsp;<span class="glyphicon glyphicon-star"></span></label>
 		<br/>
