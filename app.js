@@ -9,11 +9,12 @@ var defaultSettings;
 var prioritaskSettings; 
 
 
-function createNewTask(name, date, importance, completeDate){
+function createNewTask(name, date, importance, completeDate, taskTime){
 	this.taskName = name;
 	this.taskDate = date;
 	this.taskImport = importance;
 	this.completeDate = completeDate;
+	this.taskTime = taskTime;
 }
 
 function createNewSettings(warningDays, dangerDays, completedStore, deletedStore){
@@ -300,10 +301,11 @@ if (localStorage.getItem("prioritaskSettings")){
 //Collect all input values and attach to object, then push to newTask_array
 $(".add_task").click(function(){
 	var new_date = $(".datepicker").val();
+	var new_time = $(".timepicker").val();
 	var new_task = $(".task_name").val();
 	var new_import = $("input[type=checkbox]").prop("checked");	
 
-	var newTask = new createNewTask(new_task, new_date, new_import);
+	var newTask = new createNewTask(new_task, new_date, new_import, " ", new_time);
 
 	newTask_array.push(newTask);
 
@@ -326,7 +328,6 @@ $(".add_task").click(function(){
 
 	//functionto write newTask_array to local storage
 	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
-
 	
 });//End on click function for add button 	
 
