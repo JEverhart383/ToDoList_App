@@ -151,6 +151,7 @@ function writeList(listArray, domElement){
 		var todo_string = "<li><div class='panel " + panelClass + "'>";
 		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + " " + importSymbol + "</h4></div>";
 		todo_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
+		todo_string += "<br><span class='glyphicon glyphicon-time'></span>" + " " + listArray[i].taskTime;
 		todo_string += "</br></br><button class='done_btn btn btn-success'><span class='glyphicon glyphicon-ok'></span> DONE</button>";
 		todo_string +=" </div></li>";
 		
@@ -194,10 +195,13 @@ function writeDoneList(listArray, domElement){
 		} else {
 			importSymbol = "<span></span>";
 		}
+
+
 			
 			var done_string = "<li><div class='panel panel-default'>";
 			done_string += "<div class='panel-heading'><h4 class='panel-title'><s>" + listArray[i].taskName + " " + importSymbol + "</s></h4></div>";
 			done_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
+			done_string += "<br><span class='glyphicon glyphicon-time'></span>" + " " + listArray[i].taskTime;
 			done_string += "</br> <span class='glyphicon glyphicon-ok'></span>&nbsp;Date Completed: " + listArray[i].completeDate;
 			done_string += "</br></br><button class='remove btn btn-danger'><span class='glyphicon glyphicon-remove'></span> Remove</button>";
 			done_string +=" </div></li>";
@@ -246,6 +250,7 @@ function writeDeletedList(listArray, domElement){
 		var todo_string = "<li><div class='panel panel-default'>";
 		todo_string += "<div class='panel-heading'><h4 class='panel-title'>" + listArray[i].taskName + " " + importSymbol + "</h4></div>";
 		todo_string += "<div class='panel-body'>" + "<span class='glyphicon glyphicon-calendar'></span>" + " " + listArray[i].taskDate;
+		todo_string += "<br><span class='glyphicon glyphicon-time'></span>" + " " + listArray[i].taskTime;
 		todo_string += "</br> <span class='glyphicon glyphicon-ok'></span>&nbsp;Date Completed: " + listArray[i].completeDate;
 		todo_string += "</br></br><button class='restore_btn btn btn-default'><span class='glyphicon glyphicon-refresh'></span> Restore</button>" + "      ";
 		todo_string += "<button class='trash_btn btn btn-danger'><span class='glyphicon glyphicon-trash'></span> Trash</button>";
@@ -328,7 +333,7 @@ $(".add_task").click(function(){
 
 	//functionto write newTask_array to local storage
 	localStorage.setItem('newTask_array', JSON.stringify(newTask_array)); 
-	
+
 });//End on click function for add button 	
 
 
