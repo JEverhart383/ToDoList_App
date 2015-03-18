@@ -311,10 +311,11 @@ $(".add_task").click(function(){
 	var new_time = $(".timepicker").val();
 	var new_task = $(".task_name").val();
 	var new_import = $("input[type=checkbox]").prop("checked");	
+	var new_dtObject = new Date(new_date + " " + new_time);
 
-	console.log(new_date + " " + new_time);
+	
 
-	var newTask = new createNewTask(new_task, new_date, new_import, " ", new_time);
+	var newTask = new createNewTask(new_task, new_date, new_import, " ", new_time, new_dtObject);
 
 
 
@@ -323,8 +324,8 @@ $(".add_task").click(function(){
 	newTask_array = newTask_array.sort(function(a , b){
 
 
-		var dateA = new Date(a.taskDate); 
-		var dateB = new Date(b.taskDate);
+		var dateA = new Date(a.dtObject); 
+		var dateB = new Date(b.dtObject);
 
 		if (+dateA === +dateB){
 
@@ -407,8 +408,8 @@ $(".todo_list").on('click','.done_btn', function (){
 
 	newTask_array = newTask_array.sort(function(a , b){
 
-		var dateA = new Date(a.taskDate); 
-		var dateB = new Date(b.taskDate);
+		var dateA = new Date(a.dtObject); 
+		var dateB = new Date(b.dtObject);
 
 		if (+dateA === +dateB){
 
@@ -487,8 +488,8 @@ if ($(".deleted_items")){
 
 		newTask_array = newTask_array.sort(function(a , b){
 
-			var dateA = new Date(a.taskDate); 
-			var dateB = new Date(b.taskDate);
+			var dateA = new Date(a.dtObject); 
+			var dateB = new Date(b.dtObject);
 
 			if (+dateA === +dateB){
 
