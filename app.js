@@ -9,12 +9,14 @@ var defaultSettings;
 var prioritaskSettings; 
 
 
-function createNewTask(name, date, importance, completeDate, taskTime){
+function createNewTask(name, date, importance, completeDate, taskTime, dtObject, taskNote){
 	this.taskName = name;
 	this.taskDate = date;
 	this.taskImport = importance;
 	this.completeDate = completeDate;
 	this.taskTime = taskTime;
+	this.dtObject = dtObject;
+	this.taskNote = taskNote; 
 }
 
 function createNewSettings(warningDays, dangerDays, completedStore, deletedStore){
@@ -310,11 +312,16 @@ $(".add_task").click(function(){
 	var new_task = $(".task_name").val();
 	var new_import = $("input[type=checkbox]").prop("checked");	
 
+	console.log(new_date + " " + new_time);
+
 	var newTask = new createNewTask(new_task, new_date, new_import, " ", new_time);
+
+
 
 	newTask_array.push(newTask);
 
 	newTask_array = newTask_array.sort(function(a , b){
+
 
 		var dateA = new Date(a.taskDate); 
 		var dateB = new Date(b.taskDate);
