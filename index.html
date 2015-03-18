@@ -44,7 +44,7 @@
 <div class="container">
 	<div class="add_task_panel">
 	 
-		<h4>Task Name</h4>
+		<h5>Task Name</h5>
 		<input type="text" class="task_name">
 
 			<h5>Due Date</h4>	
@@ -59,7 +59,8 @@
 		<input type = "text" class="timepicker" id="timepicker">
 		<script type="text/javascript">
 		$(".timepicker").pickatime({
-
+			format: 'h:i A', 
+			hiddenName: true
 			
 			
 		});
